@@ -1,0 +1,122 @@
+Feb 24, 2025 11:45:08 AM main.java.util.LoggerUtil info
+INFO: Starting Orderly Management System
+Feb 24, 2025 11:45:08 AM main.java.util.LoggerUtil info
+INFO: ProductService initialized
+Feb 24, 2025 11:45:08 AM main.java.util.LoggerUtil info
+INFO: ConsoleUI initialized
+Feb 24, 2025 11:45:08 AM main.java.util.LoggerUtil info
+INFO: Application started
+Feb 24, 2025 11:47:56 AM main.java.util.LoggerUtil info
+INFO: User selected menu option: 1
+Feb 24, 2025 11:48:21 AM main.java.util.LoggerUtil info
+INFO: Creating product: ID=001, Name=Towels
+Feb 24, 2025 11:48:21 AM main.java.util.LoggerUtil info
+INFO: Creating product: 001
+Feb 24, 2025 11:48:21 AM main.java.util.LoggerUtil info
+INFO: Product created successfully: 001
+Feb 24, 2025 11:48:21 AM main.java.util.LoggerUtil info
+INFO: Product added successfully: 001
+Feb 24, 2025 11:48:23 AM main.java.util.LoggerUtil info
+INFO: User selected menu option: 2
+Feb 24, 2025 11:48:23 AM main.java.util.LoggerUtil info
+INFO: User requested to view all products
+Feb 24, 2025 11:48:23 AM main.java.util.LoggerUtil info
+INFO: Retrieving all products
+Feb 24, 2025 11:48:23 AM main.java.util.LoggerUtil info
+INFO: Retrieved 0 products
+Feb 24, 2025 11:48:23 AM main.java.util.LoggerUtil info
+INFO: Product catalog is empty
+Feb 24, 2025 11:50:29 AM main.java.util.LoggerUtil info
+INFO: User selected menu option: 3
+Feb 24, 2025 11:50:29 AM main.java.util.LoggerUtil info
+INFO: User chose to exit application
+Feb 24, 2025 11:50:29 AM main.java.util.LoggerUtil info
+INFO: Application terminated
+Feb 24, 2025 1:25:01 PM main.java.util.LoggerUtil info
+INFO: Starting Orderly Management System
+Feb 24, 2025 1:25:01 PM main.java.util.LoggerUtil info
+INFO: ProductService initialized
+Feb 24, 2025 1:25:01 PM main.java.util.LoggerUtil info
+INFO: ConsoleUI initialized
+Feb 24, 2025 1:25:01 PM main.java.util.LoggerUtil info
+INFO: Application started
+Feb 24, 2025 1:25:03 PM main.java.util.LoggerUtil exception
+SEVERE: Unhandled exception in application
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1677)
+	at main.java.ui.ConsoleUI.getIntInput(ConsoleUI.java:124)
+	at main.java.ui.ConsoleUI.start(ConsoleUI.java:35)
+	at main.java.Main.main(Main.java:21)
+
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: Starting Orderly Management System
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: ProductDAO initialized
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: ProductService initialized
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: CustomerDAO initialized
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: CustomerService initialized
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: OrderDAO initialized
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: OrderService initialized
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: ConsoleUI initialized
+Feb 24, 2025 3:00:46 PM main.java.util.LoggerUtil info
+INFO: Application started
+Feb 24, 2025 3:00:49 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 1
+Feb 24, 2025 3:00:55 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 6
+Feb 24, 2025 3:00:57 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 2
+Feb 24, 2025 3:00:59 PM main.java.util.LoggerUtil info
+INFO: User selected customer menu option: 1
+Feb 24, 2025 3:01:18 PM main.java.util.LoggerUtil info
+INFO: Creating customer: ID=Cbf698e06, Name=Jim davis
+Feb 24, 2025 3:01:18 PM main.java.util.LoggerUtil info
+INFO: Creating customer: Cbf698e06
+Feb 24, 2025 3:01:18 PM main.java.util.LoggerUtil info
+INFO: Saving customer: Cbf698e06
+Feb 24, 2025 3:01:18 PM main.java.util.LoggerUtil info
+INFO: Customer created successfully: Cbf698e06
+Feb 24, 2025 3:01:18 PM main.java.util.LoggerUtil info
+INFO: Customer added successfully: Cbf698e06
+Feb 24, 2025 3:01:21 PM main.java.util.LoggerUtil info
+INFO: User selected customer menu option: 2
+Feb 24, 2025 3:01:21 PM main.java.util.LoggerUtil info
+INFO: User requested to view all customers
+Feb 24, 2025 3:01:21 PM main.java.util.LoggerUtil info
+INFO: Retrieving all customers
+Feb 24, 2025 3:01:21 PM main.java.util.LoggerUtil info
+INFO: Retrieving all customers
+Feb 24, 2025 3:01:21 PM main.java.util.LoggerUtil info
+INFO: Customer list is empty
+Feb 24, 2025 3:09:29 PM main.java.util.LoggerUtil info
+INFO: User selected customer menu option: 4
+Feb 24, 2025 3:09:34 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 3
+Feb 24, 2025 3:09:37 PM main.java.util.LoggerUtil info
+INFO: User selected order menu option: 4
+Feb 24, 2025 3:09:41 PM main.java.util.LoggerUtil info
+INFO: Updating status for order: 001
+Feb 24, 2025 3:09:41 PM main.java.util.LoggerUtil info
+INFO: Retrieving order: 001
+Feb 24, 2025 3:09:41 PM main.java.util.LoggerUtil info
+INFO: Finding order by ID: 001
+Feb 24, 2025 3:09:41 PM main.java.util.LoggerUtil warning
+WARNING: Order not found for status update: 001
+Feb 24, 2025 3:13:20 PM main.java.util.LoggerUtil info
+INFO: User selected order menu option: 5
+Feb 24, 2025 3:13:25 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 1
+Feb 24, 2025 3:13:30 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 6
+Feb 24, 2025 3:13:32 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 4
+Feb 24, 2025 3:13:32 PM main.java.util.LoggerUtil info
+INFO: User chose to exit application
+Feb 24, 2025 3:13:32 PM main.java.util.LoggerUtil info
+INFO: Application terminated

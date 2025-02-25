@@ -32,7 +32,7 @@ public class Order {
         items.add(new OrderItem(product, quantity));
     }
 
-    // Getters
+    //getters
     public String getId() {
         return id; 
     }

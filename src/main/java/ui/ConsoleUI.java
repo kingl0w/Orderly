@@ -86,7 +86,7 @@ public class ConsoleUI {
         System.out.println("=====================================");
     }
 
-    // ========== PRODUCT MANAGEMENT ==========
+    // Product management
     
     private void productMenu() {
         boolean back = false;
@@ -339,7 +339,7 @@ public class ConsoleUI {
         }
     }
     
-    // ========== CUSTOMER MANAGEMENT ==========
+    //customer management
     
     private void customerMenu() {
         boolean back = false;
@@ -450,7 +450,7 @@ public class ConsoleUI {
         displayCustomerTable(customers);
     }
     
-    // ========== ORDER MANAGEMENT ==========
+    //order management
     
     private void orderMenu() {
         boolean back = false;
@@ -659,7 +659,7 @@ public class ConsoleUI {
         System.out.println("Enter start date (yyyy-MM-dd):");
         LocalDateTime startDate = getDateInput();
         System.out.println("Enter end date (yyyy-MM-dd):");
-        LocalDateTime endDate = getDateInput().plusDays(1);  // Add a day to include the end date
+        LocalDateTime endDate = getDateInput().plusDays(1);  //add a day to include the end date
         
         logger.info("Searching orders between " + startDate + " and " + endDate);
         
@@ -739,7 +739,7 @@ public class ConsoleUI {
         }
     }
     
-    // ========== UTILITY METHODS ==========
+    //utility methods
     
     private String getStringInput(String prompt) {
         System.out.print(prompt);

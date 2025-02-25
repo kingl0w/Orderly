@@ -66,7 +66,7 @@ public class CustomerService {
     public void updateCustomer(Customer customer) {
         logger.info("Updating customer: " + customer.getId());
         
-        // Check if customer exists
+        //checks if customer exists
         Customer existingCustomer = customerDAO.findById(customer.getId());
         if (existingCustomer == null) {
             logger.warning("Attempted to update non-existent customer: " + customer.getId());

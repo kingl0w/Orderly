@@ -47,8 +47,8 @@ public class CustomerDAO {
         logger.info("Retrieving all customers");
         List<Customer> customers = new ArrayList<>();
         
-        //for now, we'll just return an empty list as we don't have a way
-        //to query all customers from our simple database proxy
+        //for now, just return an empty list as there isn't a way
+        //to query all customers from simple database proxy
         return customers;
     }
     

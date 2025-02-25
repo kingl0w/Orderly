@@ -46,8 +46,8 @@ public class ProductDAO {
         logger.info("Retrieving all products");
         List<Product> products = new ArrayList<>();
         
-        //in a real implementation, we would query the database
-        //for now, we just return an empty list
+        //in a real implementation, would query the database
+        //for now, just return an empty list
         return products;
     }
     

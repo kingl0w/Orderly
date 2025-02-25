@@ -49,8 +49,8 @@ public class OrderDAO {
         logger.info("Retrieving all orders");
         List<Order> orders = new ArrayList<>();
         
-        //for now, we'll just return an empty list since we don't have a way
-        //to query all orders from our simple database proxy
+        //for now, return an empty list since there is no way
+        //to query all orders from simple database proxy
         return orders;
     }
     

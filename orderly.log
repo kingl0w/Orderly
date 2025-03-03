@@ -120,3 +120,53 @@ Feb 24, 2025 3:13:32 PM main.java.util.LoggerUtil info
 INFO: User chose to exit application
 Feb 24, 2025 3:13:32 PM main.java.util.LoggerUtil info
 INFO: Application terminated
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: Starting Orderly Management System
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: ProductDAO initialized
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: ProductService initialized
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: CustomerDAO initialized
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: CustomerService initialized
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: OrderDAO initialized
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: OrderService initialized
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: ConsoleUI initialized
+Mar 03, 2025 2:11:31 PM main.java.util.LoggerUtil info
+INFO: Application started
+Mar 03, 2025 2:11:42 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 1
+Mar 03, 2025 2:11:43 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 2
+Mar 03, 2025 2:11:43 PM main.java.util.LoggerUtil info
+INFO: User requested to view all products
+Mar 03, 2025 2:11:43 PM main.java.util.LoggerUtil info
+INFO: Retrieving all products
+Mar 03, 2025 2:11:43 PM main.java.util.LoggerUtil info
+INFO: Retrieving all products
+Mar 03, 2025 2:11:43 PM main.java.util.LoggerUtil info
+INFO: Product catalog is empty
+Mar 03, 2025 2:11:48 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 4
+Mar 03, 2025 2:11:50 PM main.java.util.LoggerUtil info
+INFO: User selected product search option: 3
+Mar 03, 2025 2:11:53 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 5
+Mar 03, 2025 2:11:58 PM main.java.util.LoggerUtil info
+INFO: Attempting to update product: 001
+Mar 03, 2025 2:11:58 PM main.java.util.LoggerUtil info
+INFO: Retrieving product: 001
+Mar 03, 2025 2:11:58 PM main.java.util.LoggerUtil info
+INFO: Finding product by ID: 001
+Mar 03, 2025 2:11:58 PM main.java.util.LoggerUtil warning
+WARNING: Product not found: 001
+Mar 03, 2025 2:11:58 PM main.java.util.LoggerUtil warning
+WARNING: Product not found for update: 001
+Mar 03, 2025 2:12:03 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 7
+Mar 03, 2025 2:27:11 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 4

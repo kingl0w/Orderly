@@ -12,9 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * consoleui manages user interaction through command line interface.
@@ -43,6 +41,8 @@ public class ConsoleUI {
 
     public void start() {
         logger.info("Application started");
+        displayWelcomeScreen();
+        
         boolean running = true;
         while (running) {
             displayMainMenu();
@@ -61,7 +61,14 @@ public class ConsoleUI {
                         orderMenu();
                         break;
                     case 4:
+                        displayReportMenu();
+                        break;
+                    case 5:
+                        displayHelp();
+                        break;
+                    case 6:
                         logger.info("User chose to exit application");
+                        displayExitScreen();
                         running = false;
                         break;
                     default:
@@ -77,16 +84,32 @@ public class ConsoleUI {
         logger.info("Application terminated");
     }
 
-    private void displayMainMenu() {
-        System.out.println("\n===== Orderly Management System =====");
-        System.out.println("1. Product Management");
-        System.out.println("2. Customer Management");
-        System.out.println("3. Order Management");
-        System.out.println("4. Exit");
-        System.out.println("=====================================");
+    private void displayWelcomeScreen() {
+        System.out.println("\n" +
+            "+------------------------------------------------------+\n" +
+            "|                                                      |\n" +
+            "|                 ORDERLY MANAGEMENT SYSTEM            |\n" +
+            "|                                                      |\n" +
+            "|     Manage your products, customers, and orders      |\n" +
+            "|                     Version 1.0                      |\n" +
+            "|                                                      |\n" +
+            "+------------------------------------------------------+\n");
     }
 
-    // Product management
+    private void displayMainMenu() {
+        System.out.println("\n+------------------------------------------------------+");
+        System.out.println("|                     MAIN MENU                        |");
+        System.out.println("+------------------------------------------------------+");
+        System.out.println("| 1. Product Management                                |");
+        System.out.println("| 2. Customer Management                               |");
+        System.out.println("| 3. Order Management                                  |");
+        System.out.println("| 4. Reports                                           |");
+        System.out.println("| 5. Help                                              |");
+        System.out.println("| 6. Exit                                              |");
+        System.out.println("+------------------------------------------------------+");
+    }
+
+    // ========== PRODUCT MANAGEMENT ==========
     
     private void productMenu() {
         boolean back = false;
@@ -94,10 +117,11 @@ public class ConsoleUI {
             System.out.println("\n===== Product Management =====");
             System.out.println("1. Add Product");
             System.out.println("2. View All Products");
-            System.out.println("3. Search Products");
-            System.out.println("4. Update Product");
-            System.out.println("5. Delete Product");
-            System.out.println("6. Back to Main Menu");
+            System.out.println("3. View Products (Sorted)");  // New option
+            System.out.println("4. Search Products");
+            System.out.println("5. Update Product");
+            System.out.println("6. Delete Product");
+            System.out.println("7. Back to Main Menu");
             System.out.println("=============================");
             
             int choice = getIntInput("Enter your choice: ");
@@ -112,15 +136,18 @@ public class ConsoleUI {
                         viewProducts();
                         break;
                     case 3:
-                        searchProducts();
+                        viewProductsWithSorting();  // New method
                         break;
                     case 4:
-                        updateProduct();
+                        searchProducts();
                         break;
                     case 5:
-                        deleteProduct();
+                        updateProduct();
                         break;
                     case 6:
+                        deleteProduct();
+                        break;
+                    case 7:
                         back = true;
                         break;
                     default:
@@ -186,19 +213,72 @@ public class ConsoleUI {
         }
     }
     
+    private void viewProductsWithSorting() {
+        System.out.println("\n===== Product Catalog =====");
+        logger.info("User requested to view all products");
+        
+        try {
+            List<Product> products = productService.getAllProducts();
+            if (products.isEmpty()) {
+                System.out.println("No products found.");
+                logger.info("Product catalog is empty");
+                return;
+            }
+
+            System.out.println("\nSort by:");
+            System.out.println("1. ID");
+            System.out.println("2. Name");
+            System.out.println("3. Price (low to high)");
+            System.out.println("4. Price (high to low)");
+            System.out.println("5. Stock level");
+            
+            int sortChoice = getIntInput("Enter your choice: ");
+            logger.info("User selected sort option: " + sortChoice);
+            
+            // Sort according to user choice
+            switch (sortChoice) {
+                case 1:
+                    products.sort(Comparator.comparing(Product::getId));
+                    break;
+                case 2:
+                    products.sort(Comparator.comparing(Product::getName));
+                    break;
+                case 3:
+                    products.sort(Comparator.comparing(Product::getPrice));
+                    break;
+                case 4:
+                    products.sort(Comparator.comparing(Product::getPrice).reversed());
+                    break;
+                case 5:
+                    products.sort(Comparator.comparing(Product::getStock).reversed());
+                    break;
+                default:
+                    System.out.println("Invalid choice. Showing unsorted list.");
+                    logger.warning("Invalid sort choice: " + sortChoice);
+            }
+            
+            displayProductTable(products);
+            logger.info("Displayed " + products.size() + " products with sorting option " + sortChoice);
+        } catch (Exception e) {
+            System.out.println("Error retrieving products: " + e.getMessage());
+            logger.exception("Error while retrieving products", e);
+        }
+    }
+    
+    // Update the displayProductTable method with better formatting
     private void displayProductTable(List<Product> products) {
-        System.out.println("\n------------------------------------------------");
-        System.out.printf("%-10s %-20s %-10s %-10s\n", "ID", "Name", "Price", "Stock");
-        System.out.println("------------------------------------------------");
+        System.out.println("\n+------------+----------------------+------------+------------+");
+        System.out.printf("| %-10s | %-20s | %-10s | %-10s |\n", "ID", "Name", "Price", "Stock");
+        System.out.println("+------------+----------------------+------------+------------+");
         
         for (Product product : products) {
-            System.out.printf("%-10s %-20s $%-9.2f %-10d\n", 
+            System.out.printf("| %-10s | %-20s | $%-9.2f | %-10d |\n", 
                     product.getId(), 
                     truncate(product.getName(), 20), 
                     product.getPrice(), 
                     product.getStock());
         }
-        System.out.println("------------------------------------------------");
+        System.out.println("+------------+----------------------+------------+------------+");
     }
     
     private String truncate(String text, int length) {
@@ -339,7 +419,7 @@ public class ConsoleUI {
         }
     }
     
-    //customer management
+    // ========== CUSTOMER MANAGEMENT ==========
     
     private void customerMenu() {
         boolean back = false;
@@ -347,8 +427,9 @@ public class ConsoleUI {
             System.out.println("\n===== Customer Management =====");
             System.out.println("1. Add Customer");
             System.out.println("2. View All Customers");
-            System.out.println("3. Search Customers");
-            System.out.println("4. Back to Main Menu");
+            System.out.println("3. View Customers (Sorted)");  // New option
+            System.out.println("4. Advanced Search");          // Enhanced option
+            System.out.println("5. Back to Main Menu");
             System.out.println("===============================");
             
             int choice = getIntInput("Enter your choice: ");
@@ -363,9 +444,12 @@ public class ConsoleUI {
                         viewCustomers();
                         break;
                     case 3:
-                        searchCustomers();
+                        viewCustomersWithSorting();  // New method
                         break;
                     case 4:
+                        enhancedCustomerSearch();    // Enhanced method
+                        break;
+                    case 5:
                         back = true;
                         break;
                     default:
@@ -422,35 +506,130 @@ public class ConsoleUI {
         }
     }
     
+    private void viewCustomersWithSorting() {
+        System.out.println("\n===== Customer List =====");
+        logger.info("User requested to view all customers with sorting");
+        
+        try {
+            List<Customer> customers = customerService.getAllCustomers();
+            if (customers.isEmpty()) {
+                System.out.println("No customers found.");
+                logger.info("Customer list is empty");
+                return;
+            }
+            
+            System.out.println("\nSort by:");
+            System.out.println("1. Customer ID");
+            System.out.println("2. Name (A-Z)");
+            System.out.println("3. Name (Z-A)");
+            System.out.println("4. Email");
+            
+            int sortChoice = getIntInput("Enter your choice: ");
+            logger.info("User selected sort option: " + sortChoice);
+            
+            // Sort according to user choice
+            switch (sortChoice) {
+                case 1:
+                    customers.sort(Comparator.comparing(Customer::getId));
+                    break;
+                case 2:
+                    customers.sort(Comparator.comparing(Customer::getName));
+                    break;
+                case 3:
+                    customers.sort(Comparator.comparing(Customer::getName).reversed());
+                    break;
+                case 4:
+                    customers.sort(Comparator.comparing(Customer::getEmail));
+                    break;
+                default:
+                    System.out.println("Invalid choice. Showing unsorted list.");
+                    logger.warning("Invalid sort choice: " + sortChoice);
+            }
+            
+            displayCustomerTable(customers);
+            logger.info("Displayed " + customers.size() + " customers with sorting option " + sortChoice);
+        } catch (Exception e) {
+            System.out.println("Error retrieving customers: " + e.getMessage());
+            logger.exception("Error while retrieving customers", e);
+        }
+    }
+    
+    // Update the display customer table with better formatting
     private void displayCustomerTable(List<Customer> customers) {
-        System.out.println("\n---------------------------------------------");
-        System.out.printf("%-10s %-20s %-20s\n", "ID", "Name", "Email");
-        System.out.println("---------------------------------------------");
+        System.out.println("\n+------------+----------------------+-------------------------------+");
+        System.out.printf("| %-10s | %-20s | %-29s |\n", "ID", "Name", "Email");
+        System.out.println("+------------+----------------------+-------------------------------+");
         
         for (Customer customer : customers) {
-            System.out.printf("%-10s %-20s %-20s\n", 
+            System.out.printf("| %-10s | %-20s | %-29s |\n", 
                     customer.getId(), 
                     truncate(customer.getName(), 20), 
-                    truncate(customer.getEmail(), 20));
+                    truncate(customer.getEmail(), 29));
         }
-        System.out.println("---------------------------------------------");
+        System.out.println("+------------+----------------------+-------------------------------+");
     }
     
-    private void searchCustomers() {
-        String name = getStringInput("Enter customer name to search: ");
-        logger.info("Searching customers by name: " + name);
+    // Enhanced customer search with multiple criteria
+    private void enhancedCustomerSearch() {
+        System.out.println("\n===== Advanced Customer Search =====");
+        System.out.println("1. Search by ID");
+        System.out.println("2. Search by Name");
+        System.out.println("3. Search by Email");
+        System.out.println("4. Back");
         
-        List<Customer> customers = customerService.searchCustomersByName(name);
-        if (customers.isEmpty()) {
-            System.out.println("No customers found matching: " + name);
-            return;
+        int choice = getIntInput("Enter your choice: ");
+        logger.info("User selected customer search option: " + choice);
+        
+        List<Customer> customers = new ArrayList<>();
+        String searchTerm;
+        
+        try {
+            switch (choice) {
+                case 1:
+                    searchTerm = getStringInput("Enter customer ID: ");
+                    Customer customer = customerService.getCustomer(searchTerm);
+                    if (customer != null) {
+                        customers.add(customer);
+                    }
+                    break;
+                case 2:
+                    searchTerm = getStringInput("Enter customer name: ");
+                    customers = customerService.searchCustomersByName(searchTerm);
+                    break;
+                case 3:
+                    searchTerm = getStringInput("Enter customer email: ");
+                    // Note: In a real implementation, you'd have a searchByEmail method
+                    // This is a simple placeholder that searches all customers
+                    List<Customer> allCustomers = customerService.getAllCustomers();
+                    for (Customer c : allCustomers) {
+                        if (c.getEmail().toLowerCase().contains(searchTerm.toLowerCase())) {
+                            customers.add(c);
+                        }
+                    }
+                    break;
+                case 4:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    logger.warning("Invalid customer search choice: " + choice);
+                    return;
+            }
+            
+            if (customers.isEmpty()) {
+                System.out.println("No customers found matching your criteria.");
+                return;
+            }
+            
+            System.out.println("\nFound " + customers.size() + " matching customers:");
+            displayCustomerTable(customers);
+            
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            logger.exception("Error in customer search", e);
         }
-        
-        System.out.println("\nFound " + customers.size() + " matching customers:");
-        displayCustomerTable(customers);
     }
     
-    //order management
+    // ========== ORDER MANAGEMENT ==========
     
     private void orderMenu() {
         boolean back = false;
@@ -458,9 +637,11 @@ public class ConsoleUI {
             System.out.println("\n===== Order Management =====");
             System.out.println("1. Create New Order");
             System.out.println("2. View All Orders");
-            System.out.println("3. Search Orders");
-            System.out.println("4. Update Order Status");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("3. View Orders (Sorted)");  // New option
+            System.out.println("4. View Order Details");    // New option
+            System.out.println("5. Search Orders");
+            System.out.println("6. Update Order Status");
+            System.out.println("7. Back to Main Menu");
             System.out.println("============================");
             
             int choice = getIntInput("Enter your choice: ");
@@ -475,12 +656,24 @@ public class ConsoleUI {
                         viewOrders();
                         break;
                     case 3:
-                        searchOrders();
+                        viewOrdersWithSorting();  // New method
                         break;
                     case 4:
-                        updateOrderStatus();
+                        String orderId = getStringInput("Enter order ID: ");
+                        Order order = orderService.getOrder(orderId);
+                        if (order != null) {
+                            viewOrderDetails(order);
+                        } else {
+                            System.out.println("Order not found.");
+                        }
                         break;
                     case 5:
+                        searchOrders();
+                        break;
+                    case 6:
+                        updateOrderStatus();
+                        break;
+                    case 7:
                         back = true;
                         break;
                     default:
@@ -494,13 +687,100 @@ public class ConsoleUI {
         }
     }
     
+    private void viewOrdersWithSorting() {
+        System.out.println("\n===== Order List =====");
+        logger.info("User requested to view all orders with sorting");
+        
+        try {
+            List<Order> orders = orderService.getAllOrders();
+            if (orders.isEmpty()) {
+                System.out.println("No orders found.");
+                logger.info("Order list is empty");
+                return;
+            }
+            
+            System.out.println("\nSort by:");
+            System.out.println("1. Order ID");
+            System.out.println("2. Customer Name");
+            System.out.println("3. Date (newest first)");
+            System.out.println("4. Date (oldest first)");
+            System.out.println("5. Status");
+            
+            int sortChoice = getIntInput("Enter your choice: ");
+            logger.info("User selected sort option: " + sortChoice);
+            
+            // Sort according to user choice
+            switch (sortChoice) {
+                case 1:
+                    orders.sort(Comparator.comparing(Order::getId));
+                    break;
+                case 2:
+                    orders.sort(Comparator.comparing(order -> order.getCustomer().getName()));
+                    break;
+                case 3:
+                    orders.sort(Comparator.comparing(Order::getOrderDate).reversed());
+                    break;
+                case 4:
+                    orders.sort(Comparator.comparing(Order::getOrderDate));
+                    break;
+                case 5:
+                    orders.sort(Comparator.comparing(order -> order.getStatus().toString()));
+                    break;
+                default:
+                    System.out.println("Invalid choice. Showing unsorted list.");
+                    logger.warning("Invalid sort choice: " + sortChoice);
+            }
+            
+            displayOrderTable(orders);
+            logger.info("Displayed " + orders.size() + " orders with sorting option " + sortChoice);
+        } catch (Exception e) {
+            System.out.println("Error retrieving orders: " + e.getMessage());
+            logger.exception("Error while retrieving orders", e);
+        }
+    }
+    
+    // Enhanced order detail view method
+    private void viewOrderDetails(Order order) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        
+        System.out.println("\n+---------------------------------------+");
+        System.out.println("| Order Details                         |");
+        System.out.println("+---------------------------------------+");
+        System.out.printf("| Order ID:      %-20s |\n", order.getId());
+        System.out.printf("| Date:          %-20s |\n", order.getOrderDate().format(formatter));
+        System.out.printf("| Customer:      %-20s |\n", order.getCustomer().getName());
+        System.out.printf("| Status:        %-20s |\n", order.getStatus());
+        System.out.println("+---------------------------------------+");
+        System.out.println("| Items                                 |");
+        System.out.println("+------------+----------------------+------------+------------+");
+        System.out.printf("| %-10s | %-20s | %-10s | %-10s |\n", "Product ID", "Name", "Price", "Quantity");
+        System.out.println("+------------+----------------------+------------+------------+");
+        
+        double total = 0;
+        for (OrderItem item : order.getItems()) {
+            Product product = item.getProduct();
+            double itemTotal = product.getPrice() * item.getQuantity();
+            total += itemTotal;
+            
+            System.out.printf("| %-10s | %-20s | $%-9.2f | %-10d |\n", 
+                    product.getId(),
+                    truncate(product.getName(), 20),
+                    product.getPrice(),
+                    item.getQuantity());
+        }
+        
+        System.out.println("+------------+----------------------+------------+------------+");
+        System.out.printf("|                                    Total: $%-10.2f |\n", total);
+        System.out.println("+-------------------------------------------------------+");
+    }
+    
     private void createOrder() {
         System.out.println("\n===== Create New Order =====");
         
-        //generate order ID
+        // Generate order ID
         String orderId = "O" + UUID.randomUUID().toString().substring(0, 8);
         
-        //get customer
+        // Get customer
         String customerId = getStringInput("Enter customer ID: ");
         Customer customer = customerService.getCustomer(customerId);
         
@@ -510,14 +790,14 @@ public class ConsoleUI {
             return;
         }
         
-        //create order
+        // Create order
         Order order = new Order(orderId, customer);
         
-        //add items to order
+        // Add items to order
         boolean addingItems = true;
         while (addingItems) {
             try {
-                //get product details
+                // Get product details
                 String productId = getStringInput("Enter product ID: ");
                 Product product = productService.getProduct(productId);
                 
@@ -535,13 +815,15 @@ public class ConsoleUI {
                     continue;
                 }
                 
-                //add item to order
+                // Add item to order
                 order.addItem(product, quantity);
                 System.out.println("Item added to order.");
                 
-                //ask if user wants to add more items
+                // Ask if user wants to add more items
                 String more = getStringInput("Add another item? (y/n): ");
-                if (!more.toLowerCase().startsWith("y")) {
+                if (!more.toLowerCase().startsWith("y"))
+            
+                {
                     addingItems = false;
                 }
                 
@@ -554,7 +836,7 @@ public class ConsoleUI {
             }
         }
         
-        //finalize order
+        // Finalize order
         if (order.getItems().isEmpty()) {
             System.out.println("Order cancelled: No items added.");
             logger.info("Order creation cancelled - no items added");
@@ -596,20 +878,20 @@ public class ConsoleUI {
     }
     
     private void displayOrderTable(List<Order> orders) {
-        System.out.println("\n---------------------------------------------------");
-        System.out.printf("%-10s %-15s %-15s %-15s\n", "Order ID", "Customer", "Date", "Status");
-        System.out.println("---------------------------------------------------");
+        System.out.println("\n+------------+----------------------+----------------------+---------------+");
+        System.out.printf("| %-10s | %-20s | %-20s | %-13s |\n", "Order ID", "Customer", "Date", "Status");
+        System.out.println("+------------+----------------------+----------------------+---------------+");
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         
         for (Order order : orders) {
-            System.out.printf("%-10s %-15s %-15s %-15s\n", 
+            System.out.printf("| %-10s | %-20s | %-20s | %-13s |\n", 
                     order.getId(), 
-                    truncate(order.getCustomer().getName(), 15), 
+                    truncate(order.getCustomer().getName(), 20), 
                     order.getOrderDate().format(formatter),
                     order.getStatus());
         }
-        System.out.println("---------------------------------------------------");
+        System.out.println("+------------+----------------------+----------------------+---------------+");
     }
     
     private void searchOrders() {
@@ -659,7 +941,7 @@ public class ConsoleUI {
         System.out.println("Enter start date (yyyy-MM-dd):");
         LocalDateTime startDate = getDateInput();
         System.out.println("Enter end date (yyyy-MM-dd):");
-        LocalDateTime endDate = getDateInput().plusDays(1);  //add a day to include the end date
+        LocalDateTime endDate = getDateInput().plusDays(1);  // Add a day to include the end date
         
         logger.info("Searching orders between " + startDate + " and " + endDate);
         
@@ -739,7 +1021,201 @@ public class ConsoleUI {
         }
     }
     
-    //utility methods
+    // ========== REPORTS ==========
+    
+    private void displayReportMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n+------------------------------------------------------+");
+            System.out.println("|                     REPORTS                          |");
+            System.out.println("+------------------------------------------------------+");
+            System.out.println("| 1. Product Inventory Report                          |");
+            System.out.println("| 2. Order Summary Report                              |");
+            System.out.println("| 3. Customer Orders Report                            |");
+            System.out.println("| 4. Back to Main Menu                                 |");
+            System.out.println("+------------------------------------------------------+");
+            
+            int choice = getIntInput("Enter your choice: ");
+            logger.info("User selected report menu option: " + choice);
+            
+            try {
+                switch (choice) {
+                    case 1:
+                        generateProductInventoryReport();
+                        break;
+                    case 2:
+                        generateOrderSummaryReport();
+                        break;
+                    case 3:
+                        generateCustomerOrdersReport();
+                        break;
+                    case 4:
+                        back = true;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        logger.warning("Invalid report menu choice: " + choice);
+                }
+            } catch (Exception e) {
+                System.out.println("An error occurred: " + e.getMessage());
+                logger.exception("Unhandled exception in report menu", e);
+            }
+        }
+    }
+    
+    private void generateProductInventoryReport() {
+        System.out.println("\n===== Product Inventory Report =====");
+        List<Product> products = productService.getAllProducts();
+        
+        if (products.isEmpty()) {
+            System.out.println("No products found in inventory.");
+            return;
+        }
+        
+        // Sort by stock level (high to low)
+        products.sort(Comparator.comparing(Product::getStock).reversed());
+        
+        System.out.println("\n+------------+----------------------+------------+------------+");
+        System.out.printf("| %-10s | %-20s | %-10s | %-10s |\n", "ID", "Name", "Price", "Stock");
+        System.out.println("+------------+----------------------+------------+------------+");
+        
+        double totalInventoryValue = 0;
+        int totalItems = 0;
+        
+        for (Product product : products) {
+            double inventoryValue = product.getPrice() * product.getStock();
+            totalInventoryValue += inventoryValue;
+            totalItems += product.getStock();
+            
+            System.out.printf("| %-10s | %-20s | $%-9.2f | %-10d |\n", 
+                    product.getId(), 
+                    truncate(product.getName(), 20), 
+                    product.getPrice(), 
+                    product.getStock());
+        }
+        
+        System.out.println("+------------+----------------------+------------+------------+");
+        System.out.printf("| Total Products: %-3d                Total Items: %-5d |\n", 
+                products.size(), totalItems);
+        System.out.printf("| Total Inventory Value: $%-35.2f |\n", totalInventoryValue);
+        System.out.println("+--------------------------------------------------------------+");
+    }
+    
+    private void generateOrderSummaryReport() {
+        System.out.println("\n===== Order Summary Report =====");
+        List<Order> orders = orderService.getAllOrders();
+        
+        if (orders.isEmpty()) {
+            System.out.println("No orders found.");
+            return;
+        }
+        
+        // Count orders by status
+        Map<OrderStatus, Integer> ordersByStatus = new HashMap<>();
+        for (Order order : orders) {
+            ordersByStatus.put(order.getStatus(), 
+                    ordersByStatus.getOrDefault(order.getStatus(), 0) + 1);
+        }
+        
+        System.out.println("\n+-------------------------------+");
+        System.out.println("| Order Status Summary          |");
+        System.out.println("+---------------+---------------+");
+        System.out.printf("| %-13s | %-13s |\n", "Status", "Count");
+        System.out.println("+---------------+---------------+");
+        
+        for (OrderStatus status : OrderStatus.values()) {
+            int count = ordersByStatus.getOrDefault(status, 0);
+            System.out.printf("| %-13s | %-13d |\n", status, count);
+        }
+        
+        System.out.println("+---------------+---------------+");
+        System.out.printf("| Total Orders: %-17d |\n", orders.size());
+        System.out.println("+-------------------------------+");
+    }
+    
+    private void generateCustomerOrdersReport() {
+        String customerId = getStringInput("Enter customer ID: ");
+        Customer customer = customerService.getCustomer(customerId);
+        
+        if (customer == null) {
+            System.out.println("Customer not found.");
+            return;
+        }
+        
+        System.out.println("\n===== Customer Orders Report =====");
+        System.out.printf("Customer: %s (%s)\n", customer.getName(), customer.getId());
+        
+        List<Order> orders = orderService.getOrdersByCustomer(customerId);
+        
+        if (orders.isEmpty()) {
+            System.out.println("No orders found for this customer.");
+            return;
+        }
+        
+        // Sort by date (newest first)
+        orders.sort(Comparator.comparing(Order::getOrderDate).reversed());
+        
+        System.out.println("\n+------------+----------------------+---------------+");
+        System.out.printf("| %-10s | %-20s | %-13s |\n", "Order ID", "Date", "Status");
+        System.out.println("+------------+----------------------+---------------+");
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        
+        for (Order order : orders) {
+            System.out.printf("| %-10s | %-20s | %-13s |\n", 
+                    order.getId(), 
+                    order.getOrderDate().format(formatter),
+                    order.getStatus());
+        }
+        
+        System.out.println("+------------+----------------------+---------------+");
+        System.out.printf("| Total Orders: %-35d |\n", orders.size());
+        System.out.println("+--------------------------------------------------+");
+    }
+    
+    private void displayHelp() {
+        System.out.println("\n+------------------------------------------------------+");
+        System.out.println("|                      HELP                            |");
+        System.out.println("+------------------------------------------------------+");
+        System.out.println("| Orderly Management System - User Guide               |");
+        System.out.println("|                                                      |");
+        System.out.println("| Products:                                            |");
+        System.out.println("| - Add, view, update and delete products              |");
+        System.out.println("| - Search products by name or price range             |");
+        System.out.println("| - Sort products by various criteria                  |");
+        System.out.println("|                                                      |");
+        System.out.println("| Customers:                                           |");
+        System.out.println("| - Add and view customers                             |");
+        System.out.println("| - Search customers by name, ID or email              |");
+        System.out.println("| - Sort customer list                                 |");
+        System.out.println("|                                                      |");
+        System.out.println("| Orders:                                              |");
+        System.out.println("| - Create new orders                                  |");
+        System.out.println("| - View order details                                 |");
+        System.out.println("| - Update order status                                |");
+        System.out.println("| - Search orders by customer, date                    |");
+        System.out.println("|                                                      |");
+        System.out.println("| Reports:                                             |");
+        System.out.println("| - Generate inventory, order and customer reports     |");
+        System.out.println("|                                                      |");
+        System.out.println("| For more information, please contact support.        |");
+        System.out.println("+------------------------------------------------------+");
+        
+        getStringInput("\nPress Enter to continue...");
+    }
+    
+    private void displayExitScreen() {
+        System.out.println("\n" +
+            "+------------------------------------------------------+\n" +
+            "|                                                      |\n" +
+            "|           Thank you for using Orderly!               |\n" +
+            "|                                                      |\n" +
+            "|                   Goodbye!                           |\n" +
+            "|                                                      |\n" +
+            "+------------------------------------------------------+\n");
+    }
+    
+    // ========== UTILITY METHODS ==========
     
     private String getStringInput(String prompt) {
         System.out.print(prompt);

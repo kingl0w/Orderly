@@ -2,6 +2,11 @@ package main.java.dao;
 
 import main.java.model.Product;
 import main.java.util.LoggerUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +21,11 @@ import java.util.List;
  */
 public class ProductDAO {
     private static ProductDAO instance;
-    private final DatabaseProxy db;
+    private final DatabaseManager dbManager;
     private final LoggerUtil logger;
 
     private ProductDAO() {
-        db = DatabaseProxy.getInstance();
+        dbManager = DatabaseManager.getInstance();
         logger = LoggerUtil.getInstance();
         logger.info("ProductDAO initialized");
     }
@@ -33,74 +38,159 @@ public class ProductDAO {
     }
 
     public void save(Product product) {
-        logger.info("Saving product: " + product.getId());
-        db.save("product:" + product.getId(), product);
+        String sql = "INSERT INTO products (id, name, price, description, stock) VALUES (?, ?, ?, ?, ?)";
+        
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, product.getId());
+            pstmt.setString(2, product.getName());
+            pstmt.setDouble(3, product.getPrice());
+            pstmt.setString(4, product.getDescription());
+            pstmt.setInt(5, product.getStock());
+            
+            pstmt.executeUpdate();
+            logger.info("Product saved: " + product.getId());
+            
+        } catch (SQLException e) {
+            logger.exception("Error saving product", e);
+            throw new RuntimeException("Error saving product: " + e.getMessage(), e);
+        }
     }
 
     public Product findById(String id) {
-        logger.info("Finding product by ID: " + id);
-        return (Product) db.get("product:" + id);
+        String sql = "SELECT * FROM products WHERE id = ?";
+        
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, id);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToProduct(rs);
+                }
+            }
+            
+        } catch (SQLException e) {
+            logger.exception("Error finding product by ID", e);
+            throw new RuntimeException("Error finding product: " + e.getMessage(), e);
+        }
+        
+        return null;
     }
 
     public List<Product> findAll() {
-        logger.info("Retrieving all products");
+        String sql = "SELECT * FROM products";
         List<Product> products = new ArrayList<>();
         
-        //in a real implementation, would query the database
-        //for now, just return an empty list
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            
+            while (rs.next()) {
+                products.add(mapResultSetToProduct(rs));
+            }
+            
+        } catch (SQLException e) {
+            logger.exception("Error finding all products", e);
+            throw new RuntimeException("Error retrieving products: " + e.getMessage(), e);
+        }
+        
         return products;
     }
     
-    public List<Product> findByName(String name) {
-        logger.info("Finding products by name: " + name);
-        List<Product> products = findAll();
-        List<Product> result = new ArrayList<>();
-        String searchName = name.toLowerCase();
+    public List<Product> searchProductsByName(String name) {
+        String sql = "SELECT * FROM products WHERE LOWER(name) LIKE ?";
+        List<Product> products = new ArrayList<>();
         
-        for (Product product : products) {
-            if (product.getName().toLowerCase().contains(searchName)) {
-                result.add(product);
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, "%" + name.toLowerCase() + "%");
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    products.add(mapResultSetToProduct(rs));
+                }
             }
+            
+        } catch (SQLException e) {
+            logger.exception("Error searching products by name", e);
+            throw new RuntimeException("Error searching products: " + e.getMessage(), e);
         }
         
-        return result;
+        return products;
     }
     
-    public List<Product> findByPriceRange(double minPrice, double maxPrice) {
-        logger.info("Finding products in price range: " + minPrice + " - " + maxPrice);
-        List<Product> products = findAll();
-        List<Product> result = new ArrayList<>();
+    public List<Product> searchProductsByPriceRange(double minPrice, double maxPrice) {
+        String sql = "SELECT * FROM products WHERE price BETWEEN ? AND ?";
+        List<Product> products = new ArrayList<>();
         
-        for (Product product : products) {
-            if (product.getPrice() >= minPrice && product.getPrice() <= maxPrice) {
-                result.add(product);
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setDouble(1, minPrice);
+            pstmt.setDouble(2, maxPrice);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    products.add(mapResultSetToProduct(rs));
+                }
             }
+            
+        } catch (SQLException e) {
+            logger.exception("Error searching products by price range", e);
+            throw new RuntimeException("Error searching products: " + e.getMessage(), e);
         }
         
-        return result;
-    }
-    
-    public List<Product> findByStockLevel(int minStock) {
-        logger.info("Finding products with stock >= " + minStock);
-        List<Product> products = findAll();
-        List<Product> result = new ArrayList<>();
-        
-        for (Product product : products) {
-            if (product.getStock() >= minStock) {
-                result.add(product);
-            }
-        }
-        
-        return result;
+        return products;
     }
 
     public void update(Product product) {
-        logger.info("Updating product: " + product.getId());
-        db.save("product:" + product.getId(), product);
+        String sql = "UPDATE products SET name = ?, price = ?, description = ?, stock = ? WHERE id = ?";
+        
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, product.getName());
+            pstmt.setDouble(2, product.getPrice());
+            pstmt.setString(3, product.getDescription());
+            pstmt.setInt(4, product.getStock());
+            pstmt.setString(5, product.getId());
+            
+            pstmt.executeUpdate();
+            logger.info("Product updated: " + product.getId());
+            
+        } catch (SQLException e) {
+            logger.exception("Error updating product", e);
+            throw new RuntimeException("Error updating product: " + e.getMessage(), e);
+        }
     }
 
     public void delete(String id) {
-        logger.info("Deleting product: " + id);
-        db.delete("product:" + id);
+        String sql = "DELETE FROM products WHERE id = ?";
+        
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+            logger.info("Product deleted: " + id);
+            
+        } catch (SQLException e) {
+            logger.exception("Error deleting product", e);
+            throw new RuntimeException("Error deleting product: " + e.getMessage(), e);
+        }
+    }
+    
+    private Product mapResultSetToProduct(ResultSet rs) throws SQLException {
+        return new Product.Builder()
+                .id(rs.getString("id"))
+                .name(rs.getString("name"))
+                .price(rs.getDouble("price"))
+                .description(rs.getString("description"))
+                .stock(rs.getInt("stock"))
+                .build();
     }
 }

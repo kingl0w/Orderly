@@ -170,3 +170,87 @@ Mar 03, 2025 2:12:03 PM main.java.util.LoggerUtil info
 INFO: User selected product menu option: 7
 Mar 03, 2025 2:27:11 PM main.java.util.LoggerUtil info
 INFO: User selected menu option: 4
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: Starting Orderly Management System
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: MySQL JDBC driver loaded successfully
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: Database initialized successfully
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: ProductDAO initialized
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: ProductService initialized
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: CustomerDAO initialized
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: CustomerService initialized
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: OrderDAO initialized
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: OrderService initialized
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: ConsoleUI initialized
+Mar 10, 2025 2:51:16 PM main.java.util.LoggerUtil info
+INFO: Application started
+Mar 10, 2025 2:51:22 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 1
+Mar 10, 2025 2:51:25 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 1
+Mar 10, 2025 2:52:02 PM main.java.util.LoggerUtil info
+INFO: Creating product: ID=Pf94e5296, Name=Copy Paper
+Mar 10, 2025 2:52:02 PM main.java.util.LoggerUtil info
+INFO: Creating product: Pf94e5296
+Mar 10, 2025 2:52:02 PM main.java.util.LoggerUtil info
+INFO: Product saved: Pf94e5296
+Mar 10, 2025 2:52:02 PM main.java.util.LoggerUtil info
+INFO: Product created successfully: Pf94e5296
+Mar 10, 2025 2:52:02 PM main.java.util.LoggerUtil info
+INFO: Product added successfully: Pf94e5296
+Mar 10, 2025 2:52:06 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 2
+Mar 10, 2025 2:52:06 PM main.java.util.LoggerUtil info
+INFO: User requested to view all products
+Mar 10, 2025 2:52:06 PM main.java.util.LoggerUtil info
+INFO: Retrieving all products
+Mar 10, 2025 2:52:06 PM main.java.util.LoggerUtil info
+INFO: Displayed 1 products
+Mar 10, 2025 2:52:38 PM main.java.util.LoggerUtil info
+INFO: User selected product menu option: 7
+Mar 10, 2025 2:52:40 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 2
+Mar 10, 2025 2:52:41 PM main.java.util.LoggerUtil info
+INFO: User selected customer menu option: 1
+Mar 10, 2025 2:52:58 PM main.java.util.LoggerUtil info
+INFO: Creating customer: ID=C55162084, Name=Jim Davis
+Mar 10, 2025 2:52:58 PM main.java.util.LoggerUtil info
+INFO: Creating customer: C55162084
+Mar 10, 2025 2:52:58 PM main.java.util.LoggerUtil info
+INFO: Customer saved: C55162084
+Mar 10, 2025 2:52:58 PM main.java.util.LoggerUtil info
+INFO: Customer created successfully: C55162084
+Mar 10, 2025 2:52:58 PM main.java.util.LoggerUtil info
+INFO: Customer added successfully: C55162084
+Mar 10, 2025 2:53:01 PM main.java.util.LoggerUtil info
+INFO: User selected customer menu option: 2
+Mar 10, 2025 2:53:01 PM main.java.util.LoggerUtil info
+INFO: User requested to view all customers
+Mar 10, 2025 2:53:01 PM main.java.util.LoggerUtil info
+INFO: Retrieving all customers
+Mar 10, 2025 2:53:01 PM main.java.util.LoggerUtil info
+INFO: Displayed 1 customers
+Mar 10, 2025 2:53:11 PM main.java.util.LoggerUtil info
+INFO: User selected customer menu option: 5
+Mar 10, 2025 2:53:14 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 4
+Mar 10, 2025 2:53:17 PM main.java.util.LoggerUtil info
+INFO: User selected report menu option: 1
+Mar 10, 2025 2:53:17 PM main.java.util.LoggerUtil info
+INFO: Retrieving all products
+Mar 10, 2025 2:58:33 PM main.java.util.LoggerUtil info
+INFO: User selected report menu option: 4
+Mar 10, 2025 2:58:34 PM main.java.util.LoggerUtil info
+INFO: User selected menu option: 6
+Mar 10, 2025 2:58:34 PM main.java.util.LoggerUtil info
+INFO: User chose to exit application
+Mar 10, 2025 2:58:34 PM main.java.util.LoggerUtil info
+INFO: Application terminated

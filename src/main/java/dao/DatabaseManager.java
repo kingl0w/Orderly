@@ -10,8 +10,8 @@ public class DatabaseManager {
     private final LoggerUtil logger;
     
     private static final String DB_URL = "jdbc:mysql://localhost:3306/orderly";
-    private static final String USER = "orderly";
-    private static final String PASS = "orderly123";
+    private static final String USER = DBUSER;
+    private static final String PASS = DBPASSWORD;
     
     private DatabaseManager() {
         logger = LoggerUtil.getInstance();

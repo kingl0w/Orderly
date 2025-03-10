@@ -45,7 +45,7 @@ public class OrderDAO {
             conn = dbManager.getConnection();
             conn.setAutoCommit(false);
             
-            // Save order header
+            //save order header
             String orderSql = "INSERT INTO orders (id, customer_id, order_date, status) VALUES (?, ?, ?, ?)";
             try (PreparedStatement pstmt = conn.prepareStatement(orderSql)) {
                 pstmt.setString(1, order.getId());
@@ -55,7 +55,7 @@ public class OrderDAO {
                 pstmt.executeUpdate();
             }
             
-            // Save order items
+            //save order items
             String itemSql = "INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)";
             try (PreparedStatement pstmt = conn.prepareStatement(itemSql)) {
                 for (OrderItem item : order.getItems()) {

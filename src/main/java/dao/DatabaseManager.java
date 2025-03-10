@@ -4,14 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import main.java.util.LoggerUtil;
+import main.java.util.DotEnv;
 
 public class DatabaseManager {
     private static DatabaseManager instance;
     private final LoggerUtil logger;
     
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/orderly";
-    private static final String USER = DBUSER;
-    private static final String PASS = DBPASSWORD;
+    // Load from .env file
+    private static final String DB_URL = DotEnv.get("DB_URL");
+    private static final String USER = DotEnv.get("DB_USER");
+    private static final String PASS = DotEnv.get("DB_PASSWORD");
     
     private DatabaseManager() {
         logger = LoggerUtil.getInstance();

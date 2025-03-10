@@ -1,2 +1,7 @@
 .env
 
+# Log files
+*.log
+*.log.*
+orderly.log
+orderly.log.*

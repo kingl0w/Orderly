@@ -254,3 +254,85 @@ Mar 10, 2025 2:58:34 PM main.java.util.LoggerUtil info
 INFO: User chose to exit application
 Mar 10, 2025 2:58:34 PM main.java.util.LoggerUtil info
 INFO: Application terminated
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: Starting Orderly Management System
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: MySQL JDBC driver loaded successfully
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: Database initialized successfully
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: ProductDAO initialized
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: ProductService initialized
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: CustomerDAO initialized
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: CustomerService initialized
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: OrderDAO initialized
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: OrderService initialized
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: ConsoleUI initialized
+Mar 10, 2025 3:25:51 PM main.java.util.LoggerUtil info
+INFO: Application started
+Mar 10, 2025 4:54:46 PM main.java.util.LoggerUtil info
+INFO: Loading .env file
+Mar 10, 2025 4:54:46 PM main.java.util.LoggerUtil info
+INFO: Loaded environment variable: DB_URL
+Mar 10, 2025 4:54:46 PM main.java.util.LoggerUtil info
+INFO: Loaded environment variable: DB_USER
+Mar 10, 2025 4:54:46 PM main.java.util.LoggerUtil info
+INFO: Loaded environment variable: DB_PASSWORD
+Mar 10, 2025 4:54:46 PM main.java.util.LoggerUtil info
+INFO: .env file loaded successfully
+Mar 10, 2025 4:54:46 PM main.java.util.LoggerUtil info
+INFO: Starting Orderly Management System
+Mar 10, 2025 4:54:46 PM main.java.util.LoggerUtil info
+INFO: MySQL JDBC driver loaded successfully
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: Database initialized successfully
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: ProductDAO initialized
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: ProductService initialized
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: CustomerDAO initialized
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: CustomerService initialized
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: OrderDAO initialized
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: OrderService initialized
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: Retrieving all products
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: Retrieving all customers
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: Retrieving all orders
+Mar 10, 2025 4:54:47 PM main.java.util.LoggerUtil info
+INFO: GUI initialized
+Mar 10, 2025 4:55:15 PM main.java.util.LoggerUtil info
+INFO: Creating customer: Ca7c7efd8
+Mar 10, 2025 4:55:15 PM main.java.util.LoggerUtil info
+INFO: Customer saved: Ca7c7efd8
+Mar 10, 2025 4:55:15 PM main.java.util.LoggerUtil info
+INFO: Customer created successfully: Ca7c7efd8
+Mar 10, 2025 4:55:16 PM main.java.util.LoggerUtil info
+INFO: Retrieving all customers
+Mar 10, 2025 4:55:18 PM main.java.util.LoggerUtil info
+INFO: Retrieving all customers
+Mar 10, 2025 4:55:26 PM main.java.util.LoggerUtil info
+INFO: Retrieving customer: C55162084
+Mar 10, 2025 4:55:26 PM main.java.util.LoggerUtil info
+INFO: Retrieving orders for customer: C55162084
+Mar 10, 2025 4:56:28 PM main.java.util.LoggerUtil info
+INFO: Creating product: P8bd4ad4d
+Mar 10, 2025 4:56:28 PM main.java.util.LoggerUtil info
+INFO: Product saved: P8bd4ad4d
+Mar 10, 2025 4:56:28 PM main.java.util.LoggerUtil info
+INFO: Product created successfully: P8bd4ad4d
+Mar 10, 2025 4:56:30 PM main.java.util.LoggerUtil info
+INFO: Retrieving all products
+Mar 10, 2025 4:56:41 PM main.java.util.LoggerUtil info
+INFO: Retrieving all products

@@ -1,26 +1,30 @@
 package main.java;
 
-import main.java.ui.ConsoleUI;
+import main.java.ui.SwingUI;
 import main.java.util.LoggerUtil;
+import main.java.util.DotEnv;
+// Add the missing JOptionPane import:
+import javax.swing.JOptionPane;
 
-/**
- * main application class that initializes and starts the order management system.
- * acts as the entry point for the console-based application.
- * 
- * future enhancements:
- * - add configuration loading
- * - implement login system
- */
 public class Main {
     public static void main(String[] args) {
+        // Load environment variables first
+        DotEnv.load();
+        
         LoggerUtil logger = LoggerUtil.getInstance();
         logger.info("Starting Orderly Management System");
         
         try {
-            ConsoleUI ui = new ConsoleUI();
-            ui.start();
+            SwingUI ui = new SwingUI();
+            ui.setVisible(true); // Show the Swing UI
         } catch (Exception e) {
             logger.exception("Unhandled exception in application", e);
+            JOptionPane.showMessageDialog(
+                null, 
+                "An error occurred: " + e.getMessage(), 
+                "Application Error", 
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 }

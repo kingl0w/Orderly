@@ -3,12 +3,12 @@ package main.java;
 import main.java.ui.SwingUI;
 import main.java.util.LoggerUtil;
 import main.java.util.DotEnv;
-// Add the missing JOptionPane import:
+//add the missing JOptionPane import:
 import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) {
-        // Load environment variables first
+        //load environment variables first
         DotEnv.load();
         
         LoggerUtil logger = LoggerUtil.getInstance();
@@ -16,7 +16,7 @@ public class Main {
         
         try {
             SwingUI ui = new SwingUI();
-            ui.setVisible(true); // Show the Swing UI
+            ui.setVisible(true); 
         } catch (Exception e) {
             logger.exception("Unhandled exception in application", e);
             JOptionPane.showMessageDialog(

@@ -18,10 +18,10 @@ The application requires the MySQL JDBC driver to connect to the database:
 
 4. Make sure the JAR file is included in your classpath when compiling and running the application
 
-# For compilation
+## For compilation
 javac -cp "bin;path\to\mysql-connector-j-9.2.0.jar" src\main\java\dao\*.java src\main\java\service\*.java src\main\java\ui\*.java src\main\java\Main.java
 
-# For running
+## For running
 java -cp "bin;mysql-connector-j-9.2.0.jar" main.java.Main
 
 ## Database Setup

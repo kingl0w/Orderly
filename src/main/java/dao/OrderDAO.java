@@ -212,14 +212,14 @@ public class OrderDAO {
             conn = dbManager.getConnection();
             conn.setAutoCommit(false);
             
-            // Delete order items first
+            //delete order items first
             String deleteItemsSql = "DELETE FROM order_items WHERE order_id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(deleteItemsSql)) {
                 pstmt.setString(1, id);
                 pstmt.executeUpdate();
             }
             
-            // Then delete order
+            //then delete order
             String deleteOrderSql = "DELETE FROM orders WHERE id = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(deleteOrderSql)) {
                 pstmt.setString(1, id);

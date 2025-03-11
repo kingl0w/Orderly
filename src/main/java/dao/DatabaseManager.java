@@ -10,7 +10,7 @@ public class DatabaseManager {
     private static DatabaseManager instance;
     private final LoggerUtil logger;
     
-    // Load from .env file
+    //load from .env file
     private static final String DB_URL = DotEnv.get("DB_URL");
     private static final String USER = DotEnv.get("DB_USER");
     private static final String PASS = DotEnv.get("DB_PASSWORD");
@@ -19,11 +19,11 @@ public class DatabaseManager {
         logger = LoggerUtil.getInstance();
         
         try {
-            // Ensure the driver is loaded
+            //driver is loaded
             Class.forName("com.mysql.cj.jdbc.Driver");
             logger.info("MySQL JDBC driver loaded successfully");
             
-            // Initialize database
+            //initialize database
             try (Connection conn = getConnection()) {
                 initDatabase(conn);
                 logger.info("Database initialized successfully");

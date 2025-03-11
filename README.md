@@ -22,7 +22,7 @@ The application requires the MySQL JDBC driver to connect to the database:
 javac -cp "bin;lib\mysql-connector-j-9.2.0.jar" -d bin src\main\java\dao\*.java src\main\java\service\*.java src\main\java\ui\*.java src\main\java\util\*.java src\main\java\model\*.java src\main\java\Main.java
 
 ## For running
-java -cp "bin;mysql-connector-j-9.2.0.jar" main.java.Main
+java -cp "bin;lib\mysql-connector-j-9.2.0.jar" main.java.Main
 
 ## Database Setup
 

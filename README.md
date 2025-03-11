@@ -1,5 +1,11 @@
 # Orderly Application Setup Guide
 
+## Project setup
+
+Clone the repo to any folder on your system
+
+Create a `bin` folder in the root directory for compiled classes
+
 ## Required Dependencies
 
 The application requires the MySQL JDBC driver to connect to the database:
@@ -12,9 +18,15 @@ The application requires the MySQL JDBC driver to connect to the database:
 
 4. Make sure the JAR file is included in your classpath when compiling and running the application
 
+# For compilation
+javac -cp "bin;path\to\mysql-connector-j-9.2.0.jar" src\main\java\dao\*.java src\main\java\service\*.java src\main\java\ui\*.java src\main\java\Main.java
+
+# For running
+java -cp "bin;mysql-connector-j-9.2.0.jar" main.java.Main
+
 ## Database Setup
 
-SQL setup instructions can be found in `src/main/java/sql/sql_setup.sql`
+SQL setup instructions can be found in `src/main/java/sql/sql_setup.sql` 
 
 The application will automatically create all required tables through the DatabaseManager when first run.
 
